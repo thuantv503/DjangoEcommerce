@@ -52,5 +52,5 @@ def store(request):
     data['products'] = products
     data['categories'] = categories
 
-    print('you are : ', request.session.get('email'))
+    print('you are : ', request.session.get('name'))
     return render(request, 'index.html', data)
