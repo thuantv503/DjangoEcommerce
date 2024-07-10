@@ -12,5 +12,3 @@ class Customer(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=10)
 
-    def register(self):
-        self.save()
