@@ -93,7 +93,7 @@ you can use the generic selector below, but it's slower:
 	content: "\32";
 }
 .arrow_carrot-down:before {
-	content: "\33";
+	content: "";
 }
 .arrow_carrot-left:before {
 	content: "\34";

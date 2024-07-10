@@ -593,6 +593,16 @@ ol {
 	cursor: pointer;
 }
 
+.hero__categories__all:after {
+	position: absolute;
+	right: 18px;
+	top: 9px;
+	content: "";
+	font-family: "ElegantIcons";
+	font-size: 18px;
+	color: #ffffff;
+}
+
 .hero__categories__all i {
 	font-size: 16px;
 	color: #ffffff;
@@ -605,15 +615,7 @@ ol {
 	color: #ffffff;
 }
 
-.hero__categories__all:after {
-	position: absolute;
-	right: 18px;
-	top: 9px;
-	content: "3";
-	font-family: "ElegantIcons";
-	font-size: 18px;
-	color: #ffffff;
-}
+
 
 .hero__categories ul {
 	border: 1px solid #ebebeb;
@@ -665,7 +667,6 @@ ol {
 	width: 1px;
 	background: #000000;
 	opacity: 0.1;
-	content: "";
 }
 
 .hero__search__form form .hero__search__categories span {
