@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+
 </head>
 
 <body>
@@ -150,7 +151,7 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa-solid fa-cart-shopping"></i> <span>3</span></a></li>
+                            <li><a href="{% url 'store:cart' %}"><i class="fa-solid fa-cart-shopping"></i> <span>{{ quantity }}</span></a></li>
                         </ul>
                         <div class="header__cart__price">item: <span>$150.00</span></div>
                     </div>
@@ -186,7 +187,7 @@
                         <div class="hero__search__form">
                             <form action="#">
 
-                                <input type="text" placeholder="What do yo u need?">
+                                <input type="text" placeholder="What do you need?">
                                 <button type="submit" class="site-btn">SEARCH</button>
                             </form>
                         </div>
@@ -230,7 +231,22 @@
                             <div class="featured__item">
                                 <div class="featured__item__pic set-bg" data-setbg="{{product.image.url}}">
                                     <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                        <li>
+                                            <form method="POST" action="{% url 'store:homepage' %}" class="product-action-form">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="product" value="{{ product.id }}">
+                                                <input type="hidden" name="remove" value="true">
+                                                <button type="submit" class="icon-button"><i class="fa-solid fa-minus"></i></button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form method="POST" action="{% url 'store:homepage' %}" class="product-action-form">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="product" value="{{ product.id }}">
+                                                <input type="hidden" name="add" value="add">
+                                                <button type="submit" class="icon-button"><i class="fa-solid fa-cart-shopping"></i></button>
+                                            </form>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="featured__item__text">
@@ -241,9 +257,8 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-
-
             </div>
+
         </div>
     </section>
     <!-- Featured Section End -->
