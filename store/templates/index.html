@@ -10,12 +10,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ogani Shop</title>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> -->
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
@@ -95,10 +96,27 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
 
+                            <ul class="nav navbar-nav navbar-right">
+                                {% if user.is_authenticated %}
+                                <li>
+                                    <a class="btn btn-link" href="#"><i class="fa-solid fa-user"></i> {{ user.first_name }}({{ user.username }})</a>
+                                    <a class="btn btn-link" href="{% url 'store:logout' %}">Logout</a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <form class="form-inline" action="{% url 'store:login' %}" method="post">
+                                        {% csrf_token %}
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Username" name="username" >
+                                            <input type="password" class="form-control" placeholder="Password" name="password" >
+                                            <button class="btn btn-primary" type="submit">Login</button>
+                                            <a class="btn btn-link" href="{% url 'store:registration' %}" >Sign Up</a>
+                                        </div>
+                                    </form>
+                                </li>
+                                {% endif %}
+                            </ul>
 
-                            <div class="header__top__right__auth">
-                                <a href="#"><i class="fa-solid fa-user"></i> Login</a>
-                            </div>
                         </div>
                     </div>
                 </div>
