@@ -2,6 +2,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
+from .views.detail import product_detail
 from .views.cart import cart, update_cart
 from .views.home import store, Index
 from .views.login import logout_request, login_request
@@ -19,5 +20,6 @@ urlpatterns = [
                   path(route='registration/', view=registration_request, name='registration'),
                   path(route='cart/', view=cart, name='cart'),
                   path(route='update_cart/', view=update_cart, name='update_cart'),
+                  path(route='product-detail/', view=product_detail, name='product_detail'),
 
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
