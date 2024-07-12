@@ -250,7 +250,8 @@
                                     </ul>
                                 </div>
                                 <div class="featured__item__text">
-                                    <h6><a href="#">{{ product.name }}</a></h6>
+                                    <input type="hidden" name="product" value="{{ product.id }}">
+                                    <h6><a href="{% url 'store:product_detail' %}?product_id={{ product.id }}">{{ product.name }}</a></h6>
                                     <h5>${{ product.price }}</h5>
                                 </div>
                             </div>

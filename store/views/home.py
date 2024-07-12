@@ -41,10 +41,7 @@ class Index(View):
 
 
 def store(request):
-    cart = request.session.get('cart')
-    total_quantity = sum(cart.values())
-    if not cart:
-        request.session['cart'] = {}
+
     products = None
     categories = Category.objects.all()
     categoryID = request.GET.get('category')
@@ -54,9 +51,16 @@ def store(request):
         products = Product.objects.all()
 
     total = 0
-    for product_id, quantity in cart.items():
-        product = Product.objects.get(id=product_id)
-        total += product.price * quantity
+    total_quantity = 0
+
+    cart = request.session.get('cart')
+    if not cart:
+        request.session['cart'] = {}
+    else:
+        total_quantity = sum(cart.values())
+        for product_id, quantity in cart.items():
+            product = Product.objects.get(id=product_id)
+            total += product.price * quantity
 
     data = {}
     data['products'] = products
