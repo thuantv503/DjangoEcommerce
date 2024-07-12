@@ -8,7 +8,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani Shop</title>
+    <title>Fashion Shop</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Google Font -->
@@ -75,7 +75,7 @@
         <div class="humberger__menu__contact">
             <ul>
                 <li><i class="fa-solid fa-envelope"></i> thuantv503@gmail.com</li>
-                <li>Free Shipping for all Order of $99</li>
+                <li>Free Shipping for all Order</li>
             </ul>
         </div>
     </div>
@@ -90,7 +90,7 @@
                         <div class="header__top__left">
                             <ul>
                                 <li><i class="fa-solid fa-envelope"></i> thuantv503@gmail.com</li>
-                                <li>Free Shipping for all Order of $99</li>
+                                <li>Free Shipping for all Order</li>
                             </ul>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                         <ul>
                             <li><a href="{% url 'store:cart' %}"><i class="fa-solid fa-cart-shopping"></i> <span>{{ quantity }}</span></a></li>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                        <div class="header__cart__price">item: <span>${{ total }}</span></div>
                     </div>
 
                 </div>
