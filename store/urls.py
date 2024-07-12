@@ -2,7 +2,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views.cart import cart
+from .views.cart import cart, update_cart
 from .views.home import store, Index
 from .views.login import logout_request, login_request
 from .views.registration import registration_request
@@ -17,6 +17,7 @@ urlpatterns = [
                   path(route='logout/', view=logout_request, name='logout'),
                   path(route='login/', view=login_request, name='login'),
                   path(route='registration/', view=registration_request, name='registration'),
-                  path(route='cart/', view=cart, name='cart')
+                  path(route='cart/', view=cart, name='cart'),
+                  path(route='update_cart/', view=update_cart, name='update_cart'),
 
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

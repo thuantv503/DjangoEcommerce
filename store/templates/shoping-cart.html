@@ -8,7 +8,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani Shop</title>
+    <title>Fashion Shop</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Google Font -->
@@ -46,7 +46,7 @@
             <ul>
                 <li><a href="#"><i class="fa-solid fa-cart-shopping"></i> <span>3</span></a></li>
             </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
+            <div class="header__cart__price">item: <span>${{ total }}</span></div>
         </div>
         <div class="humberger__menu__widget">
 
@@ -56,7 +56,7 @@
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="./">Home</a></li>
+                <li class="active"><a href="store/index/">Home</a></li>
                 <li><a href="shop-grid.html">Shop</a></li>
                 <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
@@ -75,7 +75,7 @@
         <div class="humberger__menu__contact">
             <ul>
                 <li><i class="fa-solid fa-envelope"></i> thuantv503@gmail.com</li>
-                <li>Free Shipping for all Order of $99</li>
+                <li>Free Shipping for all Order</li>
             </ul>
         </div>
     </div>
@@ -90,7 +90,7 @@
                         <div class="header__top__left">
                             <ul>
                                 <li><i class="fa-solid fa-envelope"></i> thuantv503@gmail.com</li>
-                                <li>Free Shipping for all Order of $99</li>
+                                <li>Free Shipping for all Order</li>
                             </ul>
                         </div>
                     </div>
@@ -127,13 +127,13 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./"><img src="../static/img/logo.png" alt=""></a>
+                        <a href="/store"><img src="../static/img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="./">Home</a></li>
+                            <li class="active"><a href="/store">Home</a></li>
                             <li><a href="shop-grid.html">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
@@ -151,9 +151,9 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="{% url 'store:cart' %}"><i class="fa-solid fa-cart-shopping"></i> <span>{{ quantity }}</span></a></li>
+                            <li><a href="{% url 'store:cart' %}"><i class="fa-solid fa-cart-shopping"></i> <span class="total-quantity">{{ total_quantity }}</span></a></li>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                        <div class="header__cart__price">item: <span class="total-price">${{ total }}</span></div>
                     </div>
 
                 </div>
@@ -182,72 +182,35 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="../store/static/img/cart/cart-1.jpg" alt="">
-                                        <h5>Vegetable’s Package</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $55.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $110.00
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="../store/static/img/cart/cart-2.jpg" alt="">
-                                        <h5>Fresh Garden Vegetable</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $39.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $39.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="../store/static/img/cart/cart-3.jpg" alt="">
-                                        <h5>Organic Bananas</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $69.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $69.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
+                                {% if products_in_cart %}
+                                    {% for item in products_in_cart %}
+                                        <tr class="cart-item" data-product-id="{{ item.product.id }}">
+                                            <td class="shoping__cart__item">
+                                                <img src="{{ item.product.image.url }}" width="100px" alt=" {{ item.product.name}} ">
+                                                <h5>{{ item.product.name}}</h5>
+                                            </td>
+                                            <td class="shoping__cart__price">
+                                                ${{ item.product.price }}
+                                            </td>
+                                            <td class="shoping__cart__quantity">
+                                                <div class="quantity">
+                                                    <div class="pro-qty">
+{#                                                        <input type="text" value="{{ item.quantity }}">#}
+                                                        <span class="dec qtybtn">-</span>
+                                                        <input type="hidden" class="product-id" value="{{ item.product.id }}">
+                                                        <input type="text" value="{{ item.quantity }}">
+                                                        <span class="inc qtybtn">+</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="shoping__cart__total">
+                                                ${{ item.sub_total }}
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+
                             </tbody>
                         </table>
                     </div>
@@ -256,28 +219,19 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                            Upadate Cart</a>
+                        <a href="/store" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
-                            </form>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
+                            <li>Subtotal <span class="total-price">${{ total }}</span></li>
+                            <li>Total <span class="total-price">${{ total }}</span></li>
                         </ul>
                         <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
@@ -320,6 +274,55 @@
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
 
+    <script>
+        var proQty = $('.pro-qty');
+        proQty.on('click', '.qtybtn', function () {
+            var $button = $(this);
+            var $parent = $button.closest('.pro-qty');
+            var productId = $parent.find('.product-id').val();
+            var $input = $parent.find('input[type="text"]');
+            var oldValue = $input.val();
+            var newVal;
+
+            if ($button.hasClass('inc')) {
+                newVal = parseFloat(oldValue) + 1;
+            } else {
+                if (oldValue > 0) {
+                    newVal = parseFloat(oldValue) - 1;
+                } else {
+                    newVal = 0;
+                }
+            }
+
+            $input.val(newVal);
+
+            $.ajax({
+                url: "{% url 'store:update_cart' %}",  // Replace with your URL for updating the cart
+                method: 'POST',
+                data: {
+                    'product_id': productId,
+                    'quantity': newVal,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    // Update total quantity and total price on success
+                    $('.total-quantity').text(response.total_quantity);
+                    $('.total-price').text('$' + response.total);
+
+                    // Update sub_total for the specific cart item
+                    var $cartItem = $('.cart-item[data-product-id="' + response.product_id + '"]');
+                    var $subTotalElement = $cartItem.find('.shoping__cart__total');
+                    $subTotalElement.text('$'+ response.quantity * response.price);
+
+                    if (response.quantity === 0) {
+                        $parent.closest('.cart-item').remove();
+                    }
+                }
+
+
+            });
+        });
+    </script>
 
 
 </body>

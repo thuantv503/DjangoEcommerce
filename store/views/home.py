@@ -17,19 +17,17 @@ class Index(View):
         cart = request.session.get('cart', {})
         if cart:
             quantity = cart.get(product)
-            if quantity is not None:
-                if remove:
+            if remove:
+                if quantity:
                     if quantity <= 1:
                         cart.pop(product)
                     else:
                         cart[product] = quantity - 1
-                elif add:
-                    if product in cart:
-                        cart[product] = quantity + 1
-                    else:
-                        cart[product] = 1
             elif add:
-                cart[product] = 1
+                if quantity:
+                    cart[product] = quantity + 1
+                else:
+                    cart[product] = 1
         else:
             cart = {}
             cart[product] = 1
@@ -55,10 +53,16 @@ def store(request):
     else:
         products = Product.objects.all()
 
+    total = 0
+    for product_id, quantity in cart.items():
+        product = Product.objects.get(id=product_id)
+        total += product.price * quantity
+
     data = {}
     data['products'] = products
     data['categories'] = categories
     data['cart'] = cart
     data['quantity'] = total_quantity
+    data['total'] = total
 
     return render(request, 'index.html', data)
