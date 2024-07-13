@@ -233,7 +233,7 @@
                             <li>Subtotal <span class="total-price">${{ total }}</span></li>
                             <li>Total <span class="total-price">${{ total }}</span></li>
                         </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a href="{% url 'store:checkout_view' %}" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>
