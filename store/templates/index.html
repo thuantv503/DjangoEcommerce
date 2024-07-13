@@ -28,6 +28,21 @@
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
 
+    <style>
+        .cart-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 9999;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -151,9 +166,9 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="{% url 'store:cart' %}"><i class="fa-solid fa-cart-shopping"></i> <span>{{ quantity }}</span></a></li>
+                            <li><a href="{% url 'store:cart' %}"><i class="fa-solid fa-cart-shopping"></i> <span id="cart-quantity">{{ quantity }}</span></a></li>
                         </ul>
-                        <div class="header__cart__price">item: <span>${{ total }}</span></div>
+                        <div class="header__cart__price">item: <span id="cart-total">${{ total }}</span></div>
                     </div>
 
                 </div>
@@ -232,22 +247,13 @@
                                 <div class="featured__item__pic set-bg" data-setbg="{{product.image.url}}">
                                     <ul class="featured__item__pic__hover">
                                         <li>
-                                            <form method="POST" action="{% url 'store:homepage' %}" class="product-action-form">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="product" value="{{ product.id }}">
-                                                <input type="hidden" name="remove" value="true">
-                                                <button type="submit" class="icon-button"><i class="fa-solid fa-minus"></i></button>
-                                            </form>
+                                            <button class="icon-button add-to-cart" data-product-id="{{ product.id }}" data-action="add">
+                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            </button>
                                         </li>
-                                        <li>
-                                            <form method="POST" action="{% url 'store:homepage' %}" class="product-action-form">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="product" value="{{ product.id }}">
-                                                <input type="hidden" name="add" value="add">
-                                                <button type="submit" class="icon-button"><i class="fa-solid fa-cart-shopping"></i></button>
-                                            </form>
-                                        </li>
+                                        <div id="cart-toast" class="cart-toast">Added to cart!</div>
                                     </ul>
+
                                 </div>
                                 <div class="featured__item__text">
                                     <input type="hidden" name="product" value="{{ product.id }}">
@@ -315,7 +321,35 @@
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('.add-to-cart, .remove-from-cart').on('click', function(e) {
+                e.preventDefault();
+                var $button = $(this);
+                var product_id = $button.data('product-id');
+                var action = $button.data('action');
 
+                $.ajax({
+                    url: "{% url 'store:homepage' %}",
+                    method: 'POST',
+                    data: {
+                        'product': product_id,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'add': action === 'add' ? true : false,
+                    },
+                    success: function(response) {
+                        $('#cart-quantity').text(response.total_quantity);
+                        $('#cart-total').text('$' + response.total);
+
+                        $('#cart-toast').fadeIn().delay(1000).fadeOut();
+                    },
+                    error: function(response) {
+                        console.log('Error:', response);
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

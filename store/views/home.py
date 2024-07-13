@@ -1,6 +1,7 @@
 import logging
 
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from store.models.product import Product
 from store.models.category import Category
@@ -12,18 +13,13 @@ logger = logging.getLogger(__name__)
 class Index(View):
     def post(self, request):
         product = request.POST.get('product')
-        remove = request.POST.get('remove')
         add = request.POST.get('add')
         cart = request.session.get('cart', {})
+
         if cart:
             quantity = cart.get(product)
-            if remove:
-                if quantity:
-                    if quantity <= 1:
-                        cart.pop(product)
-                    else:
-                        cart[product] = quantity - 1
-            elif add:
+
+            if add == 'true':
                 if quantity:
                     cart[product] = quantity + 1
                 else:
@@ -34,7 +30,18 @@ class Index(View):
 
         request.session['cart'] = cart
         print('cart:', request.session['cart'])
-        return redirect('store:store')
+
+        total_quantity = sum(cart.values())
+        total = sum(Product.objects.get(id=pid).price * qty for pid, qty in cart.items())
+
+        data = {
+            'total_quantity': total_quantity,
+            'total': total,
+        }
+
+        return JsonResponse(data)
+
+
 
     def get(self, request):
         return HttpResponseRedirect(f'/{request.get_full_path()[1:]}index/')
