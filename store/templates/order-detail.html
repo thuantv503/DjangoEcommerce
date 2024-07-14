@@ -1,5 +1,12 @@
 <div class="modal-body">
     <h3 style="margin-bottom: 10px">Order ID: {{ order.id }}</h3>
+    <span>
+        {% if order.status %}
+            <span class="badge badge-success">Success</span>
+        {% else %}
+            <span class="badge badge-danger">Pending</span>
+        {% endif %}
+    </span>
     <p><strong>Address:</strong> {{ order.address }}</p>
     <p><strong>Phone:</strong> {{ order.phone }}</p>
     <p><strong>Total Price:</strong> ${{ order.total_price }}</p>
