@@ -2,11 +2,12 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views.checkout import checkout_view
+from .views.checkout import checkout_view, checkout
 from .views.detail import product_detail
 from .views.cart import cart, update_cart
 from .views.home import store, Index
 from .views.login import logout_request, login_request
+from .views.order import order_list_view, order_detail
 from .views.registration import registration_request
 
 app_name = 'store'
@@ -23,5 +24,7 @@ urlpatterns = [
                   path(route='update_cart/', view=update_cart, name='update_cart'),
                   path(route='product-detail/', view=product_detail, name='product_detail'),
                   path(route='checkout-view/', view=checkout_view, name='checkout_view'),
-
+                  path(route='checkout/', view=checkout, name='checkout'),
+                  path(route='order-list/', view=order_list_view, name='order_list'),
+                  path(route='order-detail', view=order_detail, name='order_detail'),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
