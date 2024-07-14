@@ -27,7 +27,21 @@
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <style>
+        .badge-success {
+            color: white;
+            background-color: green;
+            padding: 5px;
+            border-radius: 3px;
+        }
 
+        .badge-danger {
+            color: white;
+            background-color: red;
+            padding: 5px;
+            border-radius: 3px;
+        }
+    </style>
 </head>
 
 <body>
@@ -44,7 +58,7 @@
         </div>
         <div class="humberger__menu__cart">
             <ul>
-                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i> <span>3</span></a></li>
+                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i> <span>{{ total_quantity }}</span></a></li>
             </ul>
             <div class="header__cart__price">item: <span>${{ total }}</span></div>
         </div>
@@ -56,18 +70,10 @@
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="store/index/">Home</a></li>
-                <li><a href="shop-grid.html">Shop</a></li>
-                <li><a href="#">Pages</a>
-                    <ul class="header__menu__dropdown">
-                        <li><a href="shop-details.html">Shop Details</a></li>
-                        <li><a href="shoping-cart.html">Shoping Cart</a></li>
-                        <li><a href="checkout.html">Check Out</a></li>
-                        <li><a href="blog-details.html">Blog Details</a></li>
-                    </ul>
-                </li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li class="active"><a href="./">Home</a></li>
+                <li><a href="{% url 'store:checkout_view' %}">Check Out</a></li>
+                <li><a href="{% url 'store:order_list' %}">Order</a></li>
+                <li><a href="#contact-session">Contact</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -133,18 +139,10 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="/store">Home</a></li>
-                            <li><a href="shop-grid.html">Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="header__menu__dropdown">
-                                    <li><a href="shop-details.html">Shop Details</a></li>
-                                    <li><a href="shoping-cart.html">Shoping Cart</a></li>
-                                    <li><a href="checkout.html">Check Out</a></li>
-                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li class="active"><a href="{% url 'store:store' %}">Home</a></li>
+                            <li><a href="{% url 'store:checkout_view' %}">Check Out</a></li>
+                            <li><a href="{% url 'store:order_list' %}">Order</a></li>
+                            <li><a href="#contact-session">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -176,6 +174,7 @@
                         <th>Address</th>
                         <th>Phone</th>
                         <th>Total Price</th>
+                        <th>Status</th>
                         <th>Details</th>
                     </tr>
                 </thead>
@@ -186,6 +185,13 @@
                             <td>{{ order.address }}</td>
                             <td>{{ order.phone }}</td>
                             <td>${{ order.total_price }}</td>
+                            <td>
+                                {% if order.status %}
+                                    <span class="badge badge-success">Success</span>
+                                {% else %}
+                                    <span class="badge badge-danger">Pending</span>
+                                {% endif %}
+                            </td>
                             <td><a href="" class="btn btn-primary view-details" data-order-id="{{ order.id }}">View Details</a></td>
                         </tr>
                     {% endfor %}

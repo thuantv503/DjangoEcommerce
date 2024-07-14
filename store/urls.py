@@ -9,6 +9,7 @@ from .views.home import store, Index
 from .views.login import logout_request, login_request
 from .views.order import order_list_view, order_detail
 from .views.registration import registration_request
+from .views.search import search
 
 app_name = 'store'
 urlpatterns = [
@@ -17,6 +18,7 @@ urlpatterns = [
                   # name the URL
                   path(route='', view=Index.as_view(), name='homepage'),
                   path(route='index/', view=store, name='store'),
+                  path(route='search/', view=search, name='search'),
                   path(route='logout/', view=logout_request, name='logout'),
                   path(route='login/', view=login_request, name='login'),
                   path(route='registration/', view=registration_request, name='registration'),
@@ -26,5 +28,5 @@ urlpatterns = [
                   path(route='checkout-view/', view=checkout_view, name='checkout_view'),
                   path(route='checkout/', view=checkout, name='checkout'),
                   path(route='order-list/', view=order_list_view, name='order_list'),
-                  path(route='order-detail', view=order_detail, name='order_detail'),
+                  path(route='order-detail/', view=order_detail, name='order_detail'),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
