@@ -1,0 +1,33 @@
+<div class="modal-body">
+    <h3 style="margin-bottom: 10px">Order ID: {{ order.id }}</h3>
+    <p><strong>Address:</strong> {{ order.address }}</p>
+    <p><strong>Phone:</strong> {{ order.phone }}</p>
+    <p><strong>Total Price:</strong> ${{ order.total_price }}</p>
+
+    <h2>Products</h2>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order_items %}
+                <tr>
+                    <td>
+                        <div class="media">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail mr-3" width="100">
+                            <div class="media-body">
+                                <h5 class="mt-0">{{ item.product.name }}</h5>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
