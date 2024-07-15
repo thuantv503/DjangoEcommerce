@@ -6,4 +6,5 @@ Customer functions:
 Admin functions:
 - Customer, Category, Product, Order management
 
-# Link video demo: https://drive.google.com/file/d/1TT0uu68_pHh5VtetZlFWfTFahZz8KdET/view?usp=sharing
+# Link video demo: 
+https://drive.google.com/file/d/1TT0uu68_pHh5VtetZlFWfTFahZz8KdET/view?usp=sharing
